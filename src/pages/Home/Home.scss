@@ -1,11 +1,8 @@
-@use '../../assets/styles/colors';
-
 .home {
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  background-color: colors.$color-primary-light;
+  justify-content: space-between;
 }

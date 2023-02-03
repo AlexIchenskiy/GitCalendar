@@ -1,4 +1,5 @@
 import "./Home.scss";
+import "./Home.responsive.scss";
 
 import Calendar from "../../components/Calendar";
 import Header from "../../components/Header";
