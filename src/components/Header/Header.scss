@@ -1,0 +1,21 @@
+@use '../../assets/styles/colors';
+@use '../../assets/styles/mixins';
+
+header {
+  width: 80%;
+  height: fit-content;
+  padding: 15px 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: colors.$color-primary-accent;
+  border-radius: 0 0 12px 12px;
+
+  h1 {
+    @include mixins.font-secondary;
+    margin: 0;
+    font-size: 36px;
+    color: colors.$color-primary-light;
+  }
+}

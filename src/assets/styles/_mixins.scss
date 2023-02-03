@@ -1,5 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans&display=swap');
+
 @mixin center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin font-primary {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+@mixin font-secondary {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
 }

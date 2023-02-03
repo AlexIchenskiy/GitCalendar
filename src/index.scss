@@ -1,5 +1,14 @@
-body {
+html, body, #root {
+  display: block;
+  position: relative;
+  min-width: 320px;
+  width: auto;
+  height: 100%;
   margin: 0;
+  overflow: auto;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
