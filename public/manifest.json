@@ -1,6 +1,6 @@
 {
-  "short_name": "Git Calendar",
-  "name": "Git Calendar App",
+  "short_name": "GitCalendar",
+  "name": "GitCalendar App",
   "icons": [
     {
       "src": "favicon.ico",
