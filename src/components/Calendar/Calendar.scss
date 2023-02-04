@@ -1,4 +1,5 @@
 @use '../../assets/styles/colors';
+@use '../../assets/styles/mixins';
 
 .calendar {
   width: 100%;
@@ -18,5 +19,26 @@
     height: 80%;
     border-radius: 12px;
     background-color: colors.$color-secondary-light;
+
+    table {
+      width: 100%;
+      margin: 0;
+      padding: 18px;
+      border-spacing: 16px 0;
+
+      thead {
+        tr {
+          th {
+            @include mixins.font-primary;
+            width: auto;
+            padding-bottom: 12px;
+            text-align: left;
+            font-size: clamp(0.8rem, 2.25vw, 3vh);
+            color: colors.$color-primary-dark;
+            border-bottom: 1px solid colors.$color-primary-light;
+          }
+        }
+      }
+    }
   }
 }

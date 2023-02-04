@@ -1,5 +1,20 @@
 @media only screen and (max-width: 480px) {
   .calendar {
     height: calc(85% - 20px);
+
+    .calendar-table {
+      table {
+        padding: 12px 4px;
+        border-spacing: 8px 0;
+
+        thead {
+          tr {
+            th {
+              padding-bottom: 6px;
+            }
+          }
+        }
+      }
+    }
   }
 }
