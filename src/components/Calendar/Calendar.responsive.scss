@@ -1,3 +1,13 @@
+@media only screen and (max-width: 992px) {
+  .calendar {
+    .calendar-table {
+      table {
+        padding: 16px 8px;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 480px) {
   .calendar {
     height: calc(85% - 20px);
