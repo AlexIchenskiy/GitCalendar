@@ -1,8 +1,49 @@
 @media only screen and (max-width: 992px) {
-  .calendar {
-    .calendar-table {
-      table {
-        padding: 16px 8px;
+  .calendar-table {
+    table {
+      padding: 16px 8px;
+    }
+  }
+}
+
+@media only screen and (max-width: 568px) {
+  .calendar-info-date {
+    .date-wrapper {
+      width: 190px;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .calendar-info-date {
+    .left {
+      margin-right: 5px;
+    }
+
+    .right {
+      margin-left: 5px;
+    }
+
+    .left,
+    .right {
+      margin-top: 4px;
+    }
+
+    .left div,
+    .right div {
+      width: 8px;
+      height: 8px;
+    }
+
+    .date-wrapper {
+      width: 130px;
+    }
+  }
+
+  .calendar-table {
+    table {
+      .table-day {
+        padding: 0;
       }
     }
   }
@@ -11,17 +52,17 @@
 @media only screen and (max-width: 480px) {
   .calendar {
     height: calc(85% - 20px);
+  }
 
-    .calendar-table {
-      table {
-        padding: 12px 4px;
-        border-spacing: 8px 0;
+  .calendar-table {
+    table {
+      padding: 12px 4px;
+      border-spacing: 8px 0;
 
-        thead {
-          tr {
-            th {
-              padding-bottom: 6px;
-            }
+      thead {
+        tr {
+          th {
+            padding-bottom: 6px;
           }
         }
       }

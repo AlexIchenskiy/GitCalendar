@@ -1,9 +1,19 @@
+@use './colors';
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Work+Sans&display=swap');
 
 @mixin center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin arrow {
+  width: 12px;
+  height: 12px;
+  border: 2px solid colors.$color-primary-accent;
+  border-right: 0;
+  border-bottom: 0;
 }
 
 @mixin font-primary {
