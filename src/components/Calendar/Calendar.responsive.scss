@@ -14,6 +14,27 @@
   }
 }
 
+@media only screen and (max-width: 480px) {
+  .calendar {
+    height: calc(85% - 20px);
+  }
+
+  .calendar-table {
+    table {
+      padding: 12px 4px;
+      border-spacing: 8px 0;
+
+      thead {
+        tr {
+          th {
+            padding-bottom: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 400px) {
   .calendar-info-date {
     .left {
@@ -42,29 +63,11 @@
 
   .calendar-table {
     table {
+      padding: 12px 0;
+      border-spacing: 4px 0;
+
       .table-day {
         padding: 0;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 480px) {
-  .calendar {
-    height: calc(85% - 20px);
-  }
-
-  .calendar-table {
-    table {
-      padding: 12px 4px;
-      border-spacing: 8px 0;
-
-      thead {
-        tr {
-          th {
-            padding-bottom: 6px;
-          }
-        }
       }
     }
   }
