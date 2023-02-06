@@ -93,14 +93,21 @@ const CalendarWeeks = (props) => {
                       )}
                     </span>
                     <span>
-                      {day.commits[0].commit.message
-                        .slice(
-                          0,
-                          width > 892
-                            ? Math.floor(width / 120)
-                            : Math.floor(width / 150)
-                        )
-                        .trim() + "..."}
+                      {day.commits[0].commit.message.length >
+                      (width > 892
+                        ? Math.floor(width / 120)
+                        : Math.floor(width / 150))
+                        ? day.commits[0].commit.message
+                            .slice(
+                              0,
+                              width > 1280
+                                ? Math.floor(width / 110)
+                                : width > 892
+                                ? Math.floor(width / 120)
+                                : Math.floor(width / 150)
+                            )
+                            .trim() + "..."
+                        : day.commits[0].commit.message}
                     </span>
                   </div>
                 ) : (
