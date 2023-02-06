@@ -1,12 +1,14 @@
 @use '../src/assets/styles/colors';
 @use '../src/assets/styles/mixins';
 
-html, body, #root {
+html,
+body,
+#root {
   display: block;
   position: relative;
   min-width: 320px;
   width: 100%;
-  min-height: 320px;
+  min-height: 792px;
   height: 100%;
   margin: 0;
   overflow: auto;
