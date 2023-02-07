@@ -1,12 +1,16 @@
 import { Route, Routes } from "react-router-dom";
+import { UserContextProvider } from "./context/UserContext";
+
 import Home from "./pages/Home";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/:date" element={<Home />} />
-    </Routes>
+    <UserContextProvider>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:date" element={<Home />} />
+      </Routes>
+    </UserContextProvider>
   );
 }
 
