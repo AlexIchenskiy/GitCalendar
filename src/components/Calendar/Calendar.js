@@ -51,7 +51,11 @@ const Calendar = () => {
       <div className="calendar-table">
         <table>
           <CalendarDays />
-          <CalendarWeeks date={date} username={userData.username} />
+          <CalendarWeeks
+            date={date}
+            username={userData.username}
+            repo={userData.repo}
+          />
         </table>
       </div>
     </div>

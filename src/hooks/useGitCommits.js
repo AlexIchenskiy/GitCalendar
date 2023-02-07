@@ -1,12 +1,14 @@
 import moment from "moment";
 import { useEffect, useState } from "react";
 
-const useGitCommits = (user, year, month) => {
+const useGitCommits = (user, repo = "", year, month) => {
   const [commits, setCommits] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cancel, setCancel] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     let currCommits = [];
     setCommits([]);
 
@@ -22,9 +24,13 @@ const useGitCommits = (user, year, month) => {
       const until = date.endOf("month").format("YYYY-MM-DD");
 
       const params = {
-        author: username,
+        "author-name": username,
         "committer-date": since + ".." + until,
       };
+
+      if (repo.length > 3) {
+        params.repo = repo;
+      }
 
       const queryString = Object.keys(params)
         .map((key) => `${key}:${params[key]}`)
@@ -32,16 +38,13 @@ const useGitCommits = (user, year, month) => {
 
       try {
         const res = await fetch(
-          `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`
+          `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`,
+          { signal: controller.signal }
         );
 
         if (!res.ok) {
           throw new Error(res.status);
         }
-
-        console.log(
-          `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`
-        );
 
         const data = (await res.json()).items;
         if (!data || data.length === 0) {
@@ -56,24 +59,32 @@ const useGitCommits = (user, year, month) => {
         if (linkHeader && linkHeader.match(/<(.*?)>; rel="next"/) && page < 8) {
           getCommits(++page);
         } else {
-          currCommits.sort(
-            (comm1, comm2) =>
-              moment(comm1.commit.author.date) -
-              moment(comm2.commit.author.date)
-          );
-          setCommits(currCommits);
-          hasMore = false;
-          setLoading(false);
+          if (!cancel) {
+            currCommits.sort(
+              (comm1, comm2) =>
+                moment(comm1.commit.author.date) -
+                moment(comm2.commit.author.date)
+            );
+            setCommits(currCommits);
+            hasMore = false;
+            setLoading(false);
+          }
         }
       } catch (error) {
         setError(error);
         setLoading(true);
-        setTimeout(() => getCommits(page), 5000);
+        if (error.message === "403") {
+          setTimeout(() => getCommits(page), 5000);
+        }
       }
     };
-    getCommits();
-  }, [user, year, month]);
 
+    getCommits();
+    return () => {
+      setCancel(true);
+      controller.abort();
+    };
+  }, [user, repo, year, month, cancel]);
   return { loading, commits, error };
 };
 

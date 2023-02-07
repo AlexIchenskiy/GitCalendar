@@ -9,7 +9,7 @@ import { UserContext } from "../../context/UserContext";
 
 const Header = () => {
   const [userData, setUserData] = useContext(UserContext);
-  const [username, setUsername] = useState(userData.username);
+  const [data, setData] = useState(userData);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleClick = () => {
@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   const handleClose = () => {
-    setUsername(userData.username);
+    setData(userData);
     setIsVisible(false);
   };
 
@@ -26,7 +26,8 @@ const Header = () => {
     e.preventDefault();
     setUserData({
       ...userData,
-      username: username,
+      username: data.username,
+      repo: data.repo,
     });
   };
 
@@ -43,9 +44,20 @@ const Header = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={data.username}
+              onChange={(e) => setData({ ...data, username: e.target.value })}
               placeholder="Username"
+            />
+            <button type="submit" className="button-accept">
+              <span>&#10003;</span>
+            </button>
+          </form>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={data.repo}
+              onChange={(e) => setData({ ...data, repo: e.target.value })}
+              placeholder="Username/Repo"
             />
             <button type="submit" className="button-accept">
               <span>&#10003;</span>

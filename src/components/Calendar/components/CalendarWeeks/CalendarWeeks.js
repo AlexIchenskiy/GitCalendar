@@ -50,8 +50,13 @@ function calculateWeeks(date, commits) {
   return weeks;
 }
 
-const CalendarWeeks = ({ username = null, date }) => {
-  const { commits = [] } = useGitCommits(username, date.year(), date.month());
+const CalendarWeeks = ({ username = null, repo = "", date }) => {
+  const { commits = [] } = useGitCommits(
+    username,
+    repo,
+    date.year(),
+    date.month()
+  );
   const memoWeeks = useMemo(
     () => calculateWeeks(date, commits),
     [date, commits]
