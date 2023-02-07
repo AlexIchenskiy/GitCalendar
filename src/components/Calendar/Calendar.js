@@ -3,10 +3,11 @@ import "./Calendar.responsive.scss";
 
 import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment/moment";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import CalendarDays from "./components/CalendarDays";
 import CalendarWeeks from "./components/CalendarWeeks";
+import { UserContext } from "../../context/UserContext";
 
 function calculateDate(date) {
   return moment(date).isValid() ? moment(date) : moment();
@@ -15,6 +16,7 @@ function calculateDate(date) {
 const Calendar = () => {
   const { date: selectedDate } = useParams();
   const navigate = useNavigate();
+  const [userData] = useContext(UserContext);
 
   const [date, setDate] = useState(calculateDate(selectedDate));
 
@@ -49,7 +51,7 @@ const Calendar = () => {
       <div className="calendar-table">
         <table>
           <CalendarDays />
-          <CalendarWeeks date={date} />
+          <CalendarWeeks date={date} username={userData.username} />
         </table>
       </div>
     </div>

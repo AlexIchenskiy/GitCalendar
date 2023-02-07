@@ -115,6 +115,23 @@
       }
     }
 
+    tbody {
+      tr {
+        .clickable {
+          cursor: pointer;
+          transition: 0.3s transform;
+        }
+
+        .clickable:hover {
+          transform: scale(1.01);
+        }
+
+        .clickable:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+
     .table-day {
       width: 100%;
       height: 100%;

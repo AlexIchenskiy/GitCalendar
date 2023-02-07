@@ -2,20 +2,39 @@
 @use '../../assets/styles/mixins';
 
 header {
+  @include mixins.font-secondary;
   width: calc(100% - 50px);
   height: calc(10% - 30px);
   padding: 15px 25px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   background-color: colors.$color-primary-accent;
   border-radius: 0 0 12px 12px;
+  color: colors.$color-secondary-light;
 
   h1 {
     @include mixins.font-secondary;
     margin: 0;
     font-size: clamp(1rem, 4vw, 4vh);
     color: colors.$color-secondary-light;
+  }
+
+  .header-edit {
+    cursor: pointer;
+    transition: 0.3s transform;
+
+    span {
+      font-size: clamp(0.8rem, 2vw, 2vh);
+    }
+  }
+
+  .header-edit:hover {
+    transform: scale(1.05);
+  }
+
+  .header-edit:active {
+    transform: scale(0.98);
   }
 }

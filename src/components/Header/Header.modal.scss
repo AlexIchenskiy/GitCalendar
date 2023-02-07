@@ -1,0 +1,61 @@
+@use '../../assets/styles/colors';
+@use '../../assets/styles/mixins';
+
+.modal-form {
+  width: 100%;
+  height: auto;
+  padding-top: 35px;
+  display: flex;
+
+  form {
+    width: 100%;
+    height: auto;
+    display: flex;
+    overflow: visible;
+
+    input[type=text] {
+      width: 90%;
+      height: 36px;
+      padding: 5px;
+      border: 0;
+      box-sizing: border-box;
+      background-color: colors.$color-primary-light;
+      border-radius: 5px 5px 0 0;
+      border-bottom: 2px solid colors.$color-primary-dark;
+      transition: 0.3s all;
+    }
+
+    input[type=text]:focus,
+    input[type=text]:focus+.button-accept {
+      outline: none;
+      border-color: colors.$color-primary-accent;
+
+      span {
+        color: colors.$color-primary-accent;
+      }
+    }
+
+    .button-accept {
+      @include mixins.center;
+      width: 36px;
+      height: 36px;
+      margin-left: 15px;
+      background-color: colors.$color-primary-light;
+      border: 2px solid colors.$color-primary-dark;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s all;
+
+      span {
+        text-align: center;
+        font-size: 150%;
+        color: colors.$color-primary-dark;
+        transition: 0.3s all;
+      }
+    }
+
+    .button-accept:active {
+      transform: scale(0.95);
+    }
+  }
+}

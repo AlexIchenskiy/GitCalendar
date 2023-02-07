@@ -50,15 +50,15 @@ function calculateWeeks(date, commits) {
   return weeks;
 }
 
-const CalendarWeeks = (props) => {
-  const { loading, commits } = useGitCommits(
-    props.username || null,
-    props.date.year(),
-    props.date.month()
+const CalendarWeeks = ({ username = null, date }) => {
+  const { loading, commits, error } = useGitCommits(
+    username,
+    date.year(),
+    date.month()
   );
   const memoWeeks = useMemo(
-    () => calculateWeeks(props.date, loading ? [] : commits),
-    [props.date, commits, loading]
+    () => calculateWeeks(date, loading || error ? [] : commits),
+    [date, commits, loading, error]
   );
   const [weeks, setWeeks] = useState(memoWeeks);
   const [isVisible, setIsVisible] = useState(false);
@@ -66,7 +66,7 @@ const CalendarWeeks = (props) => {
   const { width, height } = useWindowDimensions();
 
   const handleClick = (commitArr) => {
-    if (commitArr.length > 0) {
+    if (commitArr && commitArr.length > 0) {
       setIsVisible(true);
       setEvents(commitArr);
     }
@@ -91,7 +91,13 @@ const CalendarWeeks = (props) => {
             }}
           >
             {week.map((day, index) => (
-              <td key={index} onClick={() => handleClick(day.commits)}>
+              <td
+                key={index}
+                onClick={() => handleClick(day.commits)}
+                className={
+                  day.commits && day.commits.length > 0 ? "clickable" : null
+                }
+              >
                 <div
                   className={
                     "table-day " + (day.active ? "active" : "inactive")
@@ -123,7 +129,7 @@ const CalendarWeeks = (props) => {
                                 width > 1280
                                   ? Math.floor(width / 110)
                                   : width > 892
-                                  ? Math.floor(width / 120)
+                                  ? Math.floor(width / 130)
                                   : Math.floor(width / 150)
                               )
                               .trim() + "..."
