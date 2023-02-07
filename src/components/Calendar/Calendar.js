@@ -19,6 +19,13 @@ const Calendar = () => {
   const [userData] = useContext(UserContext);
 
   const [date, setDate] = useState(calculateDate(selectedDate));
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const handleState = (loading, error) => {
+    setLoading(loading);
+    setError(error);
+  };
 
   useEffect(() => {
     const newDate = calculateDate(selectedDate);
@@ -35,6 +42,11 @@ const Calendar = () => {
   return (
     <div className="calendar">
       <div className="calendar-info">
+        <div className="calendar-info-state">
+          <span>
+            {error ? <>&#9888;</> : loading ? <>&#8635;</> : <>&#10003;</>}
+          </span>
+        </div>
         <div className="calendar-info-date">
           <div className="button left" onClick={() => handleMonthChange(-1)}>
             <div></div>
@@ -55,6 +67,7 @@ const Calendar = () => {
             date={date}
             username={userData.username}
             repo={userData.repo}
+            onStateChanged={handleState}
           />
         </table>
       </div>

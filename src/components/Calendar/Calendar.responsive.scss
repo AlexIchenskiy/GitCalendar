@@ -19,6 +19,17 @@
     height: calc(85% - 20px);
   }
 
+  .calendar-info-state {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    right: -14px;
+
+    span {
+      font-size: 16px;
+    }
+  }
+
   .calendar-table {
     table {
       padding: 12px 4px;

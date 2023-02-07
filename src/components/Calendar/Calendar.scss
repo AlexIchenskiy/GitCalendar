@@ -13,9 +13,27 @@
 .calendar-info {
   @include mixins.center;
   height: 15%;
+  position: relative;
   flex-direction: row;
   border-radius: 12px;
   background-color: colors.$color-secondary-light;
+}
+
+.calendar-info-state {
+  @include mixins.center;
+  width: 48px;
+  height: 48px;
+  right: -24px;
+  border-radius: 24px;
+  text-align: center;
+  position: absolute;
+  display: flex;
+  background-color: colors.$color-primary-accent;
+
+  span {
+    font-size: 24px;
+    color: colors.$color-primary-light;
+  }
 }
 
 .calendar-info-date {
