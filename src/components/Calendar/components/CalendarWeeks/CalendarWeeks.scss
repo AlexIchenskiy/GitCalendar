@@ -1,0 +1,61 @@
+@use '../../../../assets/styles/colors';
+@use '../../../../assets/styles/mixins';
+
+.modal-commits {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.modal-commit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+  border-bottom: 1px solid colors.$color-primary-light;
+
+  span {
+    @include mixins.font-primary;
+    padding: 3px;
+  }
+
+  a {
+    text-decoration: none;
+    transform-origin: 0%;
+    transition: 0.3s transform;
+  }
+
+  a:hover {
+    transform: scale(1.01);
+  }
+
+  a:active {
+    transform: scale(0.98);
+  }
+
+  .modal-commit-title {
+    font-size: clamp(0.8rem, 2.25vw, 1.2rem);
+    font-weight: 600;
+    color: colors.$color-primary-accent;
+  }
+
+  .modal-commit-subtitle {
+    font-size: clamp(0.6rem, 2.25vw, 0.9rem);
+    color: colors.$color-primary-dark;
+  }
+
+  .modal-commit-description {
+    font-size: clamp(0.8rem, 2.25vw, 1rem);
+    color: colors.$color-primary-dark;
+  }
+}
+
+.modal-commits::-webkit-scrollbar {
+  display: none;
+}

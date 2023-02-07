@@ -1,7 +1,11 @@
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
+
 import useGitCommits from "../../../../hooks/useGitCommits";
 import useWindowDimensions from "../../../../hooks/useWindowDimensions";
+import Modal from "../../../Modal";
+
+import "./CalendarWeeks.scss";
 
 function calculateWeeks(date, commits) {
   const firstDay = moment([date.year(), date.month(), 1]);
@@ -57,79 +61,123 @@ const CalendarWeeks = (props) => {
     [props.date, commits, loading]
   );
   const [weeks, setWeeks] = useState(memoWeeks);
+  const [isVisible, setIsVisible] = useState(false);
+  const [events, setEvents] = useState([]);
   const { width, height } = useWindowDimensions();
+
+  const handleClick = (commitArr) => {
+    if (commitArr.length > 0) {
+      setIsVisible(true);
+      setEvents(commitArr);
+    }
+  };
+
+  const handleClose = () => {
+    setIsVisible(false);
+  };
 
   useEffect(() => {
     setWeeks(memoWeeks);
   }, [memoWeeks]);
 
   return (
-    <tbody>
-      {weeks.map((week, index) => (
-        <tr
-          key={index}
-          style={{
-            height: `calc(100% / ${weeks.length})`,
-          }}
-        >
-          {week.map((day, index) => (
-            <td key={index}>
-              <div
-                className={"table-day " + (day.active ? "active" : "inactive")}
-              >
-                <div className="table-day-info">
-                  <span>{day.value}</span>
-                  {day.commits && day.commits.length > 1 && width > 768 ? (
-                    <span className="table-day-info-more">
-                      +{day.commits.length - 1} more
-                    </span>
-                  ) : null}
+    <>
+      <tbody>
+        {weeks.map((week, index) => (
+          <tr
+            key={index}
+            style={{
+              height: `calc(100% / ${weeks.length})`,
+            }}
+          >
+            {week.map((day, index) => (
+              <td key={index} onClick={() => handleClick(day.commits)}>
+                <div
+                  className={
+                    "table-day " + (day.active ? "active" : "inactive")
+                  }
+                >
+                  <div className="table-day-info">
+                    <span>{day.value}</span>
+                    {day.commits && day.commits.length > 1 && width > 768 ? (
+                      <span className="table-day-info-more">
+                        +{day.commits.length - 1} more
+                      </span>
+                    ) : null}
+                  </div>
+                  {day.commits && day.commits[0] && width > 587 ? (
+                    <div className="table-day-description">
+                      <span>
+                        {moment(day.commits[0].commit.author.date).format(
+                          "HH:mm"
+                        )}
+                      </span>
+                      <span>
+                        {day.commits[0].commit.message.length >
+                        (width > 892
+                          ? Math.floor(width / 120)
+                          : Math.floor(width / 150))
+                          ? day.commits[0].commit.message
+                              .slice(
+                                0,
+                                width > 1280
+                                  ? Math.floor(width / 110)
+                                  : width > 892
+                                  ? Math.floor(width / 120)
+                                  : Math.floor(width / 150)
+                              )
+                              .trim() + "..."
+                          : day.commits[0].commit.message}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="table-day-lines">
+                      {day.commits
+                        ? day.commits.map((commit, index) =>
+                            commit && index < Math.floor(height / 120) ? (
+                              <span
+                                key={index}
+                                style={{ opacity: 1 - 0.2 * index }}
+                              ></span>
+                            ) : null
+                          )
+                        : null}
+                    </div>
+                  )}
                 </div>
-                {day.commits && day.commits[0] && width > 587 ? (
-                  <div className="table-day-description">
-                    <span>
-                      {moment(day.commits[0].commit.author.date).format(
-                        "HH:mm"
-                      )}
-                    </span>
-                    <span>
-                      {day.commits[0].commit.message.length >
-                      (width > 892
-                        ? Math.floor(width / 120)
-                        : Math.floor(width / 150))
-                        ? day.commits[0].commit.message
-                            .slice(
-                              0,
-                              width > 1280
-                                ? Math.floor(width / 110)
-                                : width > 892
-                                ? Math.floor(width / 120)
-                                : Math.floor(width / 150)
-                            )
-                            .trim() + "..."
-                        : day.commits[0].commit.message}
-                    </span>
-                  </div>
-                ) : (
-                  <div className="table-day-lines">
-                    {day.commits
-                      ? day.commits.map((commit, index) =>
-                          commit && index < Math.floor(height / 120) ? (
-                            <span
-                              key={index}
-                              style={{ opacity: 1 - 0.2 * index }}
-                            ></span>
-                          ) : null
-                        )
-                      : null}
-                  </div>
-                )}
-              </div>
-            </td>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+      <Modal
+        isVisible={isVisible}
+        onClose={handleClose}
+        title={
+          events[0]
+            ? moment(events[0].commit.author.date).format("YYYY.MM.DD")
+            : null
+        }
+      >
+        <div className="modal-commits">
+          {events.map((event, index) => (
+            <div className="modal-commit" key={index}>
+              <a href={event.html_url} target="_blank" rel="noreferrer">
+                <span className="modal-commit-title">
+                  {event.commit.message}
+                </span>
+              </a>
+              <span className="modal-commit-subtitle">
+                {moment(event.commit.author.date).format("HH:mm:ss")}
+              </span>
+              <span className="modal-commit-description">
+                Repo: {event.repository.name}
+              </span>
+            </div>
           ))}
-        </tr>
-      ))}
-    </tbody>
+        </div>
+      </Modal>
+    </>
   );
 };
 
