@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 
 const useGitCommits = (user, repo = "", year, month) => {
   const [commits, setCommits] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setCancel(false);
+    setLoading(true);
+
     const controller = new AbortController();
     let currCommits = [];
     setCommits([]);
@@ -43,12 +46,14 @@ const useGitCommits = (user, repo = "", year, month) => {
         );
 
         if (!res.ok) {
+          setError(res.status);
           throw new Error(res.status);
         }
 
         const data = (await res.json()).items;
         if (!data || data.length === 0) {
           hasMore = false;
+          setLoading(false);
           return;
         }
 
@@ -67,25 +72,30 @@ const useGitCommits = (user, repo = "", year, month) => {
             );
             setCommits(currCommits);
             hasMore = false;
+            setError(null);
             setLoading(false);
           }
         }
-      } catch (error) {
-        setError(error);
-        setLoading(true);
-        if (error.message === "403") {
-          setTimeout(() => getCommits(page), 5000);
+      } catch (e) {
+        if (!cancel) {
+          setError(e);
+          setLoading(true);
+          if (e.message === "403") {
+            setTimeout(() => getCommits(page), 5000);
+          }
         }
       }
     };
 
     getCommits();
+
     return () => {
       setCancel(true);
       controller.abort();
     };
   }, [user, repo, year, month, cancel]);
-  return { loading, commits, error };
+
+  return { commits, loading, error };
 };
 
 export default useGitCommits;
