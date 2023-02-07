@@ -2,6 +2,7 @@
 @use '../../assets/styles/mixins';
 
 .modal {
+  max-width: 100%;
   width: auto;
   min-width: 20%;
   height: 100%;
@@ -10,6 +11,7 @@
   box-sizing: border-box;
   padding: 15px;
   background-color: colors.$color-secondary-light;
+  box-shadow: -1px 0px 15px 0px colors.$color-primary-light;
   border-radius: 0 12px 12px 0;
 }
 
@@ -32,23 +34,23 @@
   box-sizing: border-box;
   text-align: center;
 
-  span {
+  span:first-of-type {
     @include mixins.font-secondary;
     align-self: flex-start;
     margin-right: 25px;
+    font-size: clamp(1.4rem, 2rem, 2vw);
   }
 
   .modal-close-button {
     width: 25px;
     height: 25px;
     position: relative;
-    align-self: flex-end;
     transition: 0.2s transform;
 
     span {
       width: 25px;
       height: 2px;
-      top: 10px;
+      top: 12px;
       display: block;
       position: absolute;
       background-color: colors.$color-primary-dark;
@@ -76,6 +78,10 @@
 .modal-content {
   width: 100%;
   height: auto;
+  max-height: 95%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .opened {
