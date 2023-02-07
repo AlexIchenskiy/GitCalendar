@@ -32,7 +32,15 @@ const useGitCommits = (user, year, month) => {
 
       try {
         const res = await fetch(
-          `https://api.github.com/search/commits?q=${queryString}&page=${page}`
+          `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`
+        );
+
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+
+        console.log(
+          `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`
         );
 
         const data = (await res.json()).items;
@@ -42,9 +50,10 @@ const useGitCommits = (user, year, month) => {
         }
 
         currCommits = [...currCommits, ...data];
+        setCommits(() => currCommits);
 
         const linkHeader = res.headers.get("Link");
-        if (linkHeader && linkHeader.match(/<(.*?)>; rel="next"/)) {
+        if (linkHeader && linkHeader.match(/<(.*?)>; rel="next"/) && page < 8) {
           getCommits(++page);
         } else {
           currCommits.sort(
@@ -59,9 +68,7 @@ const useGitCommits = (user, year, month) => {
       } catch (error) {
         setError(error);
         setLoading(true);
-      } finally {
-        hasMore = false;
-        setLoading(false);
+        setTimeout(() => getCommits(page), 5000);
       }
     };
     getCommits();
