@@ -1,6 +1,23 @@
-import React, { useEffect, useMemo, useState } from 'react'
-
+import React, { useMemo } from 'react'
 import useWindowDimensions from '../../../../hooks/useWindowDimensions'
+
+const CalendarDays = () => {
+  const { width } = useWindowDimensions()
+
+  const days = useMemo(() => calculateDays(width), [width])
+
+  return (
+    <>
+      <thead>
+        <tr>
+          {days.map((day) => (
+            <th key={day}>{day.toUpperCase()}</th>
+          ))}
+        </tr>
+      </thead>
+    </>
+  )
+}
 
 const daysarr = [
   'Monday',
@@ -21,29 +38,6 @@ function calculateDays (width) {
   } else {
     return daysarr
   }
-}
-
-const CalendarDays = () => {
-  const { width } = useWindowDimensions()
-
-  const [days, setDays] = useState(daysarr)
-  const memoDays = useMemo(() => calculateDays(width), [width])
-
-  useEffect(() => {
-    setDays(memoDays)
-  }, [memoDays])
-
-  return (
-    <>
-      <thead>
-        <tr>
-          {days.map((day) => (
-            <th key={day}>{day.toUpperCase()}</th>
-          ))}
-        </tr>
-      </thead>
-    </>
-  )
 }
 
 export default CalendarDays

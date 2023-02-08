@@ -8,49 +8,6 @@ import './CalendarWeeks.scss'
 
 import Modal from '../../../Modal'
 
-function calculateWeeks (date, commits) {
-  const firstDay = moment([date.year(), date.month(), 1])
-  const lastDay = moment(firstDay).endOf('month')
-
-  const weeks = []
-  let week = []
-
-  for (let i = firstDay.isoWeekday() - 1; i > 0; i--) {
-    week.unshift({
-      value: firstDay.add(i - firstDay.day(), 'days').date(),
-      active: false
-    })
-  }
-
-  for (let i = 1; i <= lastDay.date(); i++) {
-    week.push({
-      value: i,
-      active: true,
-      commits: commits.filter(
-        (commit) => moment(commit.commit.author.date).date() === i
-      )
-    })
-
-    if (week.length === 7) {
-      weeks.push(week)
-      week = []
-    }
-  }
-
-  if (week.length) {
-    weeks.push(week)
-
-    for (let i = week.length; i < 7; i++) {
-      week.push({
-        value: lastDay.add(week.length - i + 1, 'days').date(),
-        active: false
-      })
-    }
-  }
-
-  return weeks
-}
-
 const CalendarWeeks = ({
   username = null,
   repo = '',
@@ -64,12 +21,11 @@ const CalendarWeeks = ({
     error
   } = useGitCommits(username, repo, date.year(), date.month())
 
-  const memoWeeks = useMemo(
+  const weeks = useMemo(
     () => calculateWeeks(date, commits),
     [date, commits]
   )
 
-  const [weeks, setWeeks] = useState(memoWeeks)
   const [isVisible, setIsVisible] = useState(false)
   const [events, setEvents] = useState([])
 
@@ -83,10 +39,6 @@ const CalendarWeeks = ({
   const handleClose = () => {
     setIsVisible(false)
   }
-
-  useEffect(() => {
-    setWeeks(memoWeeks)
-  }, [memoWeeks])
 
   useEffect(() => {
     onStateChanged(loading, error)
@@ -210,6 +162,49 @@ CalendarWeeks.propTypes = {
   repo: PropTypes.string,
   date: PropTypes.instanceOf(moment),
   onStateChanged: PropTypes.func
+}
+
+function calculateWeeks (date, commits) {
+  const firstDay = moment([date.year(), date.month(), 1])
+  const lastDay = moment(firstDay).endOf('month')
+
+  const weeks = []
+  let week = []
+
+  for (let i = firstDay.isoWeekday() - 1; i > 0; i--) {
+    week.unshift({
+      value: firstDay.add(i - firstDay.day(), 'days').date(),
+      active: false
+    })
+  }
+
+  for (let i = 1; i <= lastDay.date(); i++) {
+    week.push({
+      value: i,
+      active: true,
+      commits: commits.filter(
+        (commit) => moment(commit.commit.author.date).date() === i
+      )
+    })
+
+    if (week.length === 7) {
+      weeks.push(week)
+      week = []
+    }
+  }
+
+  if (week.length) {
+    weeks.push(week)
+
+    for (let i = week.length; i < 7; i++) {
+      week.push({
+        value: lastDay.add(week.length - i + 1, 'days').date(),
+        active: false
+      })
+    }
+  }
+
+  return weeks
 }
 
 export default CalendarWeeks

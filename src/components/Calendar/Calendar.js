@@ -9,10 +9,6 @@ import './Calendar.responsive.scss'
 import CalendarDays from './components/CalendarDays'
 import CalendarWeeks from './components/CalendarWeeks'
 
-function calculateDate (date) {
-  return moment(date).isValid() ? moment(date) : moment()
-}
-
 const Calendar = () => {
   const { date: selectedDate } = useParams()
   const navigate = useNavigate()
@@ -73,6 +69,10 @@ const Calendar = () => {
       </div>
     </div>
   )
+}
+
+function calculateDate (date) {
+  return moment(date).isValid() ? moment(date) : moment()
 }
 
 export default Calendar
