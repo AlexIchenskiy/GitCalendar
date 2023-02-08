@@ -7,6 +7,7 @@ import useWindowDimensions from '../../../../hooks/useWindowDimensions'
 import './CalendarWeeks.scss'
 
 import Modal from '../../../Modal'
+import useModal from '../../../../hooks/useModal'
 
 const CalendarWeeks = ({
   username = null,
@@ -26,18 +27,14 @@ const CalendarWeeks = ({
     [date, commits]
   )
 
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, toggle] = useModal()
   const [events, setEvents] = useState([])
 
   const handleClick = (commitArr) => {
     if (commitArr && commitArr.length > 0) {
-      setIsVisible(true)
+      toggle()
       setEvents(commitArr)
     }
-  }
-
-  const handleClose = () => {
-    setIsVisible(false)
   }
 
   useEffect(() => {
@@ -128,7 +125,7 @@ const CalendarWeeks = ({
       </tbody>
       <Modal
         isVisible={isVisible}
-        onClose={handleClose}
+        onClose={toggle}
         title={
           events[0]
             ? moment(events[0].commit.author.date).format('YYYY.MM.DD')

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import useUserContext from '../../hooks/useUserContext'
 
 import './Header.scss'
@@ -6,23 +6,20 @@ import './Header.modal.scss'
 import './Header.responsive.scss'
 
 import Modal from '../Modal'
+import useModal from '../../hooks/useModal'
 
 const Header = () => {
   const [userData, setUserData] = useUserContext()
   const [data, setData] = useState(userData)
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, toggle] = useModal()
 
-  const handleClick = () => {
-    setIsVisible(true)
-  }
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setData(userData)
-    setIsVisible(false)
-  }
+    toggle()
+  })
 
   const handleSubmit = (e) => {
-    setIsVisible(false)
+    toggle()
     e.preventDefault()
     setUserData({
       ...userData,
@@ -35,7 +32,7 @@ const Header = () => {
     <>
       <header>
         <h1>GitCalendar</h1>
-        <div className="header-edit" onClick={() => handleClick()}>
+        <div className="header-edit" onClick={toggle}>
           <span>&#9998; Edit user data</span>
         </div>
       </header>
