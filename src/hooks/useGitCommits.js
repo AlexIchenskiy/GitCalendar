@@ -1,7 +1,12 @@
+import { useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import objectToQueryString from '../util/objectToQueryString'
 
 const useGitCommits = (user, repo = '', year, month) => {
+  const queryString = useMemo(
+    () => calculateQueryString(user, repo, year, month),
+    [user, repo, year, month]
+  )
   const [commits, setCommits] = useState([])
   const [loading, setLoading] = useState(false)
   const [cancel, setCancel] = useState(false)
@@ -21,24 +26,6 @@ const useGitCommits = (user, repo = '', year, month) => {
         return
       }
 
-      const username = user || 'AlexIchenskiy'
-      const date = moment().year(year).month(month)
-      const since = date.startOf('month').format('YYYY-MM-DD')
-      const until = date.endOf('month').format('YYYY-MM-DD')
-
-      const params = {
-        'author-name': username,
-        'committer-date': since + '..' + until
-      }
-
-      if (repo.length > 3) {
-        params.repo = repo
-      }
-
-      const queryString = Object.keys(params)
-        .map((key) => `${key}:${params[key]}`)
-        .join('+')
-
       try {
         const res = await fetch(
           `https://api.github.com/search/commits?q=${queryString}&per_page=100&page=${page}`,
@@ -57,19 +44,17 @@ const useGitCommits = (user, repo = '', year, month) => {
           return
         }
 
-        currCommits = [...currCommits, ...data]
+        currCommits = sortByCommitDate([...currCommits, ...data])
         setCommits(() => currCommits)
 
+        // if there are more commits on less than 8 pages (API limits)
+        // get commits from the next page
         const linkHeader = res.headers.get('Link')
         if (linkHeader && linkHeader.match(/<(.*?)>; rel="next"/) && page < 8) {
           getCommits(++page)
         } else {
           if (!cancel) {
-            currCommits.sort(
-              (comm1, comm2) =>
-                moment(comm1.commit.author.date) -
-                moment(comm2.commit.author.date)
-            )
+            currCommits = sortByCommitDate(currCommits)
             setCommits(currCommits)
             hasMore = false
             setError(null)
@@ -80,6 +65,7 @@ const useGitCommits = (user, repo = '', year, month) => {
         if (!cancel) {
           setError(e)
           setLoading(true)
+          // try again after 5 seconds if too many requests
           if (e.message === '403') {
             setTimeout(() => getCommits(page), 5000)
           }
@@ -93,9 +79,35 @@ const useGitCommits = (user, repo = '', year, month) => {
       setCancel(true)
       controller.abort()
     }
-  }, [user, repo, year, month, cancel])
+  }, [queryString])
 
   return { commits, loading, error }
+}
+
+const calculateQueryString = (user, repo, year, month) => {
+  const username = user || 'AlexIchenskiy'
+  const date = moment().year(year).month(month)
+  const since = date.startOf('month').format('YYYY-MM-DD')
+  const until = date.endOf('month').format('YYYY-MM-DD')
+
+  const params = {
+    'author-name': username,
+    'committer-date': since + '..' + until
+  }
+
+  if (repo.length > 3) {
+    params.repo = repo
+  }
+
+  return objectToQueryString(params)
+}
+
+const sortByCommitDate = (arr) => {
+  return arr.sort(
+    (comm1, comm2) =>
+      moment(comm1.commit.author.date) -
+      moment(comm2.commit.author.date)
+  )
 }
 
 export default useGitCommits
