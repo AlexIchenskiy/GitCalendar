@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/gitcalendar/static/css/main.cb423598.css",
-    "main.js": "/gitcalendar/static/js/main.d747708c.js",
-    "static/js/787.b7dea0b7.chunk.js": "/gitcalendar/static/js/787.b7dea0b7.chunk.js",
-    "index.html": "/gitcalendar/index.html",
-    "main.cb423598.css.map": "/gitcalendar/static/css/main.cb423598.css.map",
-    "main.d747708c.js.map": "/gitcalendar/static/js/main.d747708c.js.map",
-    "787.b7dea0b7.chunk.js.map": "/gitcalendar/static/js/787.b7dea0b7.chunk.js.map"
+    "main.css": "/GitCalendar/static/css/main.cb423598.css",
+    "main.js": "/GitCalendar/static/js/main.75f74084.js",
+    "static/js/787.b7dea0b7.chunk.js": "/GitCalendar/static/js/787.b7dea0b7.chunk.js",
+    "index.html": "/GitCalendar/index.html",
+    "main.cb423598.css.map": "/GitCalendar/static/css/main.cb423598.css.map",
+    "main.75f74084.js.map": "/GitCalendar/static/js/main.75f74084.js.map",
+    "787.b7dea0b7.chunk.js.map": "/GitCalendar/static/js/787.b7dea0b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cb423598.css",
-    "static/js/main.d747708c.js"
+    "static/js/main.75f74084.js"
   ]
 }
