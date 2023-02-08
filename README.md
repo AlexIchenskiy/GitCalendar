@@ -7,6 +7,8 @@
 # GitCalendar
 GitCalendar is a calendar visualization tool that displays your Git commit history.
 
+### [Live demo](https://alexichenskiy.github.io/GitCalendar/)
+
 ## Getting started
 ### Installation
 1. `git clone https://github.com/AlexIchenskiy/GitCalendar.git` to clone the repository
