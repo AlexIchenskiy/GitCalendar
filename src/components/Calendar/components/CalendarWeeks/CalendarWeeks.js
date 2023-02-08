@@ -54,9 +54,7 @@ const CalendarWeeks = ({
               <td
                 key={index}
                 onClick={() => handleClick(day.commits)}
-                className={
-                  day.commits && day.commits.length > 0 ? 'clickable' : null
-                }
+                className={day.commits && day.commits.length > 0 && 'clickable'}
               >
                 <CalendarWeeksDay day={day} width={width} height={height} />
               </td>
@@ -68,9 +66,7 @@ const CalendarWeeks = ({
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}
         title={
-          events[0]
-            ? moment(events[0].commit.author.date).format('YYYY.MM.DD')
-            : null
+          events[0] && moment(events[0].commit.author.date).format('YYYY.MM.DD')
         }
       >
         <div className="modal-commits">

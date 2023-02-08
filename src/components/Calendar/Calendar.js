@@ -37,10 +37,10 @@ const Calendar = () => {
       <div className="calendar-info">
         <div className="calendar-info-state">
           <span>
-            {error ? <>&#9888;</> : loading ? <>&#8635;</> : <>&#10003;</>}
+            {error ? <>&#9888;</> : (loading ? <>&#8635;</> : <>&#10003;</>)}
           </span>
           <span className="calendar-info-state-hover">
-            {error ? errors[error.message] || error.message : loading ? 'Loading...' : 'Loaded!'}
+            {error ? errors[error.message] || error.message : (loading ? 'Loading...' : 'Loaded!')}
           </span>
         </div>
         <div className="calendar-info-date">
