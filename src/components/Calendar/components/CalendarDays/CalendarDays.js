@@ -1,6 +1,9 @@
 import React, { useMemo } from 'react'
 import useWindowDimensions from '../../../../hooks/useWindowDimensions'
 
+import './CalendarDays.scss'
+import './CalendarDays.responsive.scss'
+
 const CalendarDays = () => {
   const { width } = useWindowDimensions()
 

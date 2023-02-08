@@ -5,6 +5,7 @@ import useGitCommits from '../../../../hooks/useGitCommits'
 import useWindowDimensions from '../../../../hooks/useWindowDimensions'
 
 import './CalendarWeeks.scss'
+import './CalendarWeeks.responsive.scss'
 
 import Modal from '../../../Modal'
 import useModal from '../../../../hooks/useModal'

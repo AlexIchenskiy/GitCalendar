@@ -1,0 +1,17 @@
+@use '../../../../assets/styles/colors';
+@use '../../../../assets/styles/mixins';
+
+thead {
+  tr {
+    th {
+      @include mixins.font-primary;
+      width: calc(100% / 7);
+      padding-bottom: 12px;
+      text-align: left;
+      font-size: clamp(0.8rem, 2.25vw, 1.15rem);
+      letter-spacing: 1px;
+      color: colors.$color-primary-dark;
+      border-bottom: 1px solid colors.$color-primary-light;
+    }
+  }
+}

@@ -29,9 +29,7 @@ const Calendar = () => {
   }, [date])
 
   const handleMonthChange = (amount) => {
-    const newDate = date
-    newDate.add(amount, 'months')
-    navigate(`/${newDate.format('YYYY-MM')}`)
+    navigate(`/${date.add(amount, 'months').format('YYYY-MM')}`)
   }
 
   return (

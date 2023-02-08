@@ -34,14 +34,6 @@
     table {
       padding: 12px 4px;
       border-spacing: 8px 0;
-
-      thead {
-        tr {
-          th {
-            padding-bottom: 6px;
-          }
-        }
-      }
     }
   }
 }
@@ -75,10 +67,6 @@
   .calendar-table {
     table {
       border-spacing: 4px 0;
-
-      .table-day {
-        padding: 0;
-      }
     }
   }
 }
