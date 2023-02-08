@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 
-import "./Modal.scss";
+import './Modal.scss'
 
-const Modal = ({ title = "", children, isVisible, onClose }) => {
-  const [visible, setVisible] = useState(isVisible);
+const Modal = ({ title = '', children, isVisible, onClose }) => {
+  const [visible, setVisible] = useState(isVisible)
 
   const handleClose = () => {
-    setVisible(false);
-    onClose();
-  };
+    setVisible(false)
+    onClose()
+  }
 
   useEffect(() => {
-    setVisible(isVisible);
-  }, [isVisible]);
+    setVisible(isVisible)
+  }, [isVisible])
 
-  const root = document.getElementById("root");
+  const root = document.getElementById('root')
 
   return ReactDOM.createPortal(
     <div
-      className={"modal-wrapper " + (visible ? "opened" : "closed")}
+      className={'modal-wrapper ' + (visible ? 'opened' : 'closed')}
       onClick={() => handleClose()}
     >
       <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -34,7 +35,14 @@ const Modal = ({ title = "", children, isVisible, onClose }) => {
       </div>
     </div>,
     root
-  );
-};
+  )
+}
 
-export default Modal;
+Modal.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node,
+  isVisible: PropTypes.bool,
+  onClose: PropTypes.func
+}
+
+export default Modal

@@ -1,9 +1,10 @@
-import { Route, Routes } from "react-router-dom";
-import { UserContextProvider } from "./context/UserContext";
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { UserContextProvider } from './context/UserContext'
 
-import Home from "./pages/Home";
+import Home from './pages/Home'
 
-function App() {
+function App () {
   return (
     <UserContextProvider>
       <Routes>
@@ -11,7 +12,7 @@ function App() {
         <Route path="/:date" element={<Home />} />
       </Routes>
     </UserContextProvider>
-  );
+  )
 }
 
-export default App;
+export default App

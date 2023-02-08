@@ -1,37 +1,37 @@
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from 'react'
 
-import useWindowDimensions from "../../../../hooks/useWindowDimensions";
+import useWindowDimensions from '../../../../hooks/useWindowDimensions'
 
 const daysarr = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday'
+]
 
-function calculateDays(width) {
+function calculateDays (width) {
   if (width < 992) {
-    let newDays = daysarr.map((el) => {
-      return el.slice(0, 3);
-    });
-    return newDays;
+    const newDays = daysarr.map((el) => {
+      return el.slice(0, 3)
+    })
+    return newDays
   } else {
-    return daysarr;
+    return daysarr
   }
 }
 
 const CalendarDays = () => {
-  const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions()
 
-  const [days, setDays] = useState(daysarr);
-  const memoDays = useMemo(() => calculateDays(width), [width]);
+  const [days, setDays] = useState(daysarr)
+  const memoDays = useMemo(() => calculateDays(width), [width])
 
   useEffect(() => {
-    setDays(memoDays);
-  }, [memoDays]);
+    setDays(memoDays)
+  }, [memoDays])
 
   return (
     <>
@@ -43,7 +43,7 @@ const CalendarDays = () => {
         </tr>
       </thead>
     </>
-  );
-};
+  )
+}
 
-export default CalendarDays;
+export default CalendarDays

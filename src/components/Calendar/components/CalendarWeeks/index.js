@@ -1,3 +1,3 @@
-import CalendarWeeks from "./CalendarWeeks";
+import CalendarWeeks from './CalendarWeeks'
 
-export default CalendarWeeks;
+export default CalendarWeeks

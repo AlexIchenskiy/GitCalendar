@@ -1,35 +1,35 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../../context/UserContext'
 
-import Modal from "../Modal";
+import './Header.scss'
+import './Header.modal.scss'
+import './Header.responsive.scss'
 
-import "./Header.scss";
-import "./Header.modal.scss";
-import "./Header.responsive.scss";
-import { UserContext } from "../../context/UserContext";
+import Modal from '../Modal'
 
 const Header = () => {
-  const [userData, setUserData] = useContext(UserContext);
-  const [data, setData] = useState(userData);
-  const [isVisible, setIsVisible] = useState(false);
+  const [userData, setUserData] = useContext(UserContext)
+  const [data, setData] = useState(userData)
+  const [isVisible, setIsVisible] = useState(false)
 
   const handleClick = () => {
-    setIsVisible(true);
-  };
+    setIsVisible(true)
+  }
 
   const handleClose = () => {
-    setData(userData);
-    setIsVisible(false);
-  };
+    setData(userData)
+    setIsVisible(false)
+  }
 
   const handleSubmit = (e) => {
-    setIsVisible(false);
-    e.preventDefault();
+    setIsVisible(false)
+    e.preventDefault()
     setUserData({
       ...userData,
       username: data.username,
-      repo: data.repo,
-    });
-  };
+      repo: data.repo
+    })
+  }
 
   return (
     <>
@@ -66,7 +66,7 @@ const Header = () => {
         </div>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

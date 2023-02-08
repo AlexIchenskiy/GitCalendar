@@ -1,8 +1,10 @@
-import "./Home.scss";
-import "./Home.responsive.scss";
+import React from 'react'
 
-import Calendar from "../../components/Calendar";
-import Header from "../../components/Header";
+import './Home.scss'
+import './Home.responsive.scss'
+
+import Calendar from '../../components/Calendar'
+import Header from '../../components/Header'
 
 const Home = () => {
   return (
@@ -10,7 +12,7 @@ const Home = () => {
       <Header />
       <Calendar />
     </section>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

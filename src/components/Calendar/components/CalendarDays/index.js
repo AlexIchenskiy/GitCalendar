@@ -1,3 +1,3 @@
-import CalendarDays from "./CalendarDays";
+import CalendarDays from './CalendarDays'
 
-export default CalendarDays;
+export default CalendarDays
