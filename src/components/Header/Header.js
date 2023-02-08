@@ -19,13 +19,13 @@ const Header = () => {
   })
 
   const handleSubmit = (e) => {
-    toggle()
     e.preventDefault()
     setUserData({
       ...userData,
       username: data.username,
       repo: data.repo
     })
+    toggle()
   }
 
   return (
