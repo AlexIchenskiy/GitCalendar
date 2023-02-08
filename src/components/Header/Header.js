@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { UserContext } from '../../context/UserContext'
+import React, { useState } from 'react'
+import useUserContext from '../../hooks/useUserContext'
 
 import './Header.scss'
 import './Header.modal.scss'
@@ -8,7 +8,7 @@ import './Header.responsive.scss'
 import Modal from '../Modal'
 
 const Header = () => {
-  const [userData, setUserData] = useContext(UserContext)
+  const [userData, setUserData] = useUserContext()
   const [data, setData] = useState(userData)
   const [isVisible, setIsVisible] = useState(false)
 

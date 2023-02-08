@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment/moment'
+import useUserContext from '../../hooks/useUserContext'
 
 import './Calendar.scss'
 import './Calendar.responsive.scss'
 
 import CalendarDays from './components/CalendarDays'
 import CalendarWeeks from './components/CalendarWeeks'
-import { UserContext } from '../../context/UserContext'
 
 function calculateDate (date) {
   return moment(date).isValid() ? moment(date) : moment()
@@ -16,16 +16,16 @@ function calculateDate (date) {
 const Calendar = () => {
   const { date: selectedDate } = useParams()
   const navigate = useNavigate()
-  const [userData] = useContext(UserContext)
+  const [userData] = useUserContext()
 
   const [date, setDate] = useState(calculateDate(selectedDate))
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const handleState = (loading, error) => {
+  const handleState = useCallback((loading, error) => {
     setLoading(loading)
     setError(error)
-  }
+  })
 
   useEffect(() => {
     const newDate = calculateDate(selectedDate)

@@ -90,7 +90,7 @@ const CalendarWeeks = ({
 
   useEffect(() => {
     onStateChanged(loading, error)
-  }, [loading, error, onStateChanged])
+  }, [loading, error])
 
   return (
     <>
