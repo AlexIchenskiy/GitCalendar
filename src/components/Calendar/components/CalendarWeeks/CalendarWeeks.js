@@ -112,7 +112,7 @@ function calculateWeeks (date, commits) {
   // fill first week with values from previous month (if present)
   for (let i = firstDay.isoWeekday() - 1; i > 0; i--) {
     week.unshift({
-      value: firstDay.add(i - firstDay.day(), 'days').date(),
+      value: firstDay.add(-1, 'days').date(),
       active: false
     })
   }
