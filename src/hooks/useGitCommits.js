@@ -73,7 +73,13 @@ const useGitCommits = (user, repo = '', year, month) => {
       }
     }
 
-    getCommits()
+    if (user.length > 0) {
+      getCommits()
+    } else {
+      setCommits([])
+      setError(new Error(422))
+      setLoading(false)
+    }
 
     return () => {
       setCancel(true)
@@ -85,13 +91,13 @@ const useGitCommits = (user, repo = '', year, month) => {
 }
 
 const calculateQueryString = (user, repo, year, month) => {
-  const username = user || 'AlexIchenskiy'
+  const username = user
   const date = moment().year(year).month(month)
   const since = date.startOf('month').format('YYYY-MM-DD')
   const until = date.endOf('month').format('YYYY-MM-DD')
 
   const params = {
-    'author-name': username,
+    author: username,
     'committer-date': since + '..' + until
   }
 
