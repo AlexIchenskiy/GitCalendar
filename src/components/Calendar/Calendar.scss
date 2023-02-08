@@ -34,6 +34,21 @@
     font-size: 24px;
     color: colors.$color-primary-light;
   }
+
+  .calendar-info-state-hover {
+    position: absolute;
+    top: 100%;
+    padding: 4px;
+    border-radius: 8px;
+    font-size: 16px;
+    opacity: 0;
+    background-color: colors.$color-primary-accent;
+    transition: 0.3s opacity;
+  }
+}
+
+.calendar-info-state:hover .calendar-info-state-hover {
+  opacity: 1;
 }
 
 .calendar-info-date {

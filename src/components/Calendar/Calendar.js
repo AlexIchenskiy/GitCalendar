@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment/moment'
 import useUserContext from '../../hooks/useUserContext'
+import errors from '../../data/errors.json'
 
 import './Calendar.scss'
 import './Calendar.responsive.scss'
@@ -39,6 +40,9 @@ const Calendar = () => {
         <div className="calendar-info-state">
           <span>
             {error ? <>&#9888;</> : loading ? <>&#8635;</> : <>&#10003;</>}
+          </span>
+          <span className="calendar-info-state-hover">
+            {error ? errors[error.message] || error.message : loading ? 'Loading...' : 'Loaded!'}
           </span>
         </div>
         <div className="calendar-info-date">

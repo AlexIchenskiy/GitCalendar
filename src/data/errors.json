@@ -1,0 +1,4 @@
+{
+  "403": "Too many requests. Please wait.",
+  "422": "Invalid Owner/Repo name"
+}
