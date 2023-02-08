@@ -11,11 +11,11 @@ import useModal from '../../hooks/useModal'
 const Header = () => {
   const [userData, setUserData] = useUserContext()
   const [data, setData] = useState(userData)
-  const [isVisible, toggle] = useModal()
+  const [isVisible, setIsVisible, toggle] = useModal()
 
   const handleClose = useCallback(() => {
     setData(userData)
-    toggle()
+    setIsVisible(false)
   })
 
   const handleSubmit = (e) => {

@@ -27,7 +27,7 @@ const CalendarWeeks = ({
     [date, commits]
   )
 
-  const [isVisible, toggle] = useModal()
+  const [isVisible, setIsVisible, toggle] = useModal()
   const [events, setEvents] = useState([])
 
   const handleClick = (commitArr) => {
@@ -125,7 +125,7 @@ const CalendarWeeks = ({
       </tbody>
       <Modal
         isVisible={isVisible}
-        onClose={toggle}
+        onClose={() => setIsVisible(false)}
         title={
           events[0]
             ? moment(events[0].commit.author.date).format('YYYY.MM.DD')
