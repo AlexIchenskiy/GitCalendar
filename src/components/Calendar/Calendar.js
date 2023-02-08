@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment/moment'
 import useUserContext from '../../hooks/useUserContext'
@@ -14,7 +14,7 @@ const Calendar = () => {
   const navigate = useNavigate()
   const [userData] = useUserContext()
 
-  const [date, setDate] = useState(calculateDate(selectedDate))
+  const date = useMemo(() => calculateDate(selectedDate), [selectedDate])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -24,10 +24,8 @@ const Calendar = () => {
   })
 
   useEffect(() => {
-    const newDate = calculateDate(selectedDate)
-    setDate(newDate)
-    navigate(`/${newDate.format('YYYY-MM')}`)
-  }, [selectedDate, navigate])
+    navigate(`/${date.format('YYYY-MM')}`)
+  }, [date])
 
   const handleMonthChange = (amount) => {
     const newDate = date
